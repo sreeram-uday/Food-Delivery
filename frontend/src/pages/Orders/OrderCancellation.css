@@ -1,0 +1,21 @@
+.order-cancellation {
+    text-align: center;
+    padding: 20px;
+  }
+  .order-cancellation img {
+    width: 200px;
+    height: auto;
+  }
+  .order-cancellation button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .order-cancellation button:hover {
+    background-color: #45a049;
+  }
+  

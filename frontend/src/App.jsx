@@ -1,0 +1,38 @@
+import React, { useState } from "react";
+import Navbar from "./components/Navbar/Navbar";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Cart from "./pages/Cart/Cart";
+import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
+import Footer from "./components/Footer/Footer";
+import LoginPopup from "./components/LoginPopup/LoginPopup";
+
+import OrderCancellation from "./pages/Orders/OrderCancellation";
+import OrderSuccessful from "./pages/Orders/OrderSuccessful";
+import OrderPlaced from "./pages/Orders/OrderPlaced";
+import MyOrders from "./pages/MyOrders/MyOrders";
+
+const App = () => {
+  const [showLogin, setShowLogin] = useState(false);
+
+  return (
+    <>
+      {showLogin ? <LoginPopup setShowLogin={setShowLogin} /> : null}
+      <div className="app">
+        <Navbar setShowLogin={setShowLogin} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<PlaceOrder />} />
+          <Route path="/order-cancellation" element={<OrderCancellation />} />
+          <Route path="/order-successful/:orderId" element={<OrderSuccessful />} />
+          <Route path="/order-placed" element={<OrderPlaced />} />
+          <Route path="/my-orders" element={<MyOrders/>}/>
+        </Routes>
+      </div>
+      <Footer />
+    </>
+  );
+};
+
+export default App;
