@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 const PlaceOrder = () => {
-  const { getTotalCartAmount, token, food_list, cartItems, url } = useContext(StoreContext);
+  const { getTotalCartAmount, token, food_list, cartItems, url,setAddress,address,orderItems,setOrderItems} = useContext(StoreContext);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -29,38 +29,18 @@ const PlaceOrder = () => {
 
   const placeOrder = async (event) => {
     event.preventDefault();
-    let orderItems = [];
+    let Items = [];
     food_list.forEach((item) => {
       if (cartItems[item._id] > 0) {
         let itemInfo = { ...item, quantity: cartItems[item._id] };
-        console.log(itemInfo)
-        orderItems.push(itemInfo);
+        Items.push(itemInfo);
       }
     });
-
-    let orderData = {
-      address: data,
-      items: orderItems,
-      amount: getTotalCartAmount() + 2,
-    };
-
-    try {
-      const response = await axios.post(`${url}/api/order/place`, orderData, {
-        headers: { Authorization: `Bearer ${token}` } // Ensure token is included if required
-      });
-
-      if (response.data.success) {
-        const orderId = response.data.orderId; // Ensure your API returns this
-        navigate(`/order-successful/${orderId}`); // Redirect to order success page with orderId
-      } else {
-        setOrderSuccess("Error placing order");
-      }
-    } catch (error) {
-      console.error(error);
-      setOrderSuccess("Error placing order");
-    }
+    console.log(data)
+    setAddress(data)
+    setOrderItems(Items)
+    navigate('/order-successful')
   };
-
   return (
     <div>
       <form onSubmit={placeOrder} className="place-order">
@@ -164,7 +144,7 @@ const PlaceOrder = () => {
                 <b>{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
               </div>
             </div>
-           <div className='button'><Link className='button2' to='/order-successful/:orderId'>Proceed To Checkout</Link></div> 
+           <div className='button'><input type='submit' value='Place Order' className='button2'/> </div> 
             {orderSuccess && <p className="order-success-message">{orderSuccess}</p>} {/* Display success message */}
           </div>
         </div>

@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<PlaceOrder />} />
           <Route path="/order-cancellation" element={<OrderCancellation />} />
-          <Route path="/order-successful/:orderId" element={<OrderSuccessful />} />
+          <Route path="/order-successful" element={<OrderSuccessful />} />
           <Route path="/order-placed" element={<OrderPlaced />} />
           <Route path="/my-orders" element={<MyOrders/>}/>
         </Routes>

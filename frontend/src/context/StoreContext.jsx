@@ -10,14 +10,19 @@ export const StoreContext = createContext({
     getTotalCartAmount: () => 0,
     url: "",
     token: "",
-    setToken: () => {}
+    address: {},
+    orderItems:[],
+    setToken: () => {},
+    setAddress: () => {},
+    setOrderItems: ()=>{}
 });
 
 const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const url = "http://localhost:4000";
     const [token, setToken] = useState("");
-
+    const [address, setAddress] = useState({});
+    const [orderItems,setOrderItems] = useState([])
     const [food_list, setFoodList] = useState([]);
 
     const addToCart = async (itemId) => {
@@ -91,13 +96,17 @@ const StoreContextProvider = (props) => {
     const contextValue = {
         food_list,
         cartItems,
+        address,
+        setAddress,
         setCartItems,
         addToCart,
         removeFromCart,
         getTotalCartAmount,
         url,
         token,
-        setToken
+        setToken,
+        orderItems,
+        setOrderItems
     };
 
     return (

@@ -24,27 +24,27 @@ const OrderSuccessful = () => {
     return () => clearInterval(interval);
   }, [navigate]);
 
-  const handleCancelOrder = async () => {
-    try {
-      const response = await fetch('/api/order/cancel', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ orderId }),
-      });
+  // const handleCancelOrder = async () => {
+  //   try {
+  //     const response = await fetch('/api/order/cancel', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ orderId }),
+  //     });
 
-      const result = await response.json();
-      if (result.success) {
-        alert('Order cancelled successfully');
-        navigate('/order-cancellation');
-      } else {
-        alert('Error cancelling order');
-      }
-    } catch (error) {
-      alert('An error occurred while cancelling the order');
-    }
-  };
+  //     const result = await response.json();
+  //     if (result.success) {
+  //       alert('Order cancelled successfully');
+  //       navigate('/order-cancellation');
+  //     } else {
+  //       alert('Error cancelling order');
+  //     }
+  //   } catch (error) {
+  //     alert('An error occurred while cancelling the order');
+  //   }
+  // };
 
   return (
     <div className="order-successful">
