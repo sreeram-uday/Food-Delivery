@@ -21,7 +21,12 @@ const OrderPlaced = () => {
 
     try {
       console.log('before function call')
-      const response = await axios.post(`${url}/api/order/place`, orderData);
+      const response = await axios.post(`${url}/api/order/place`, orderData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token in the request header
+        },
+      });
+      
 
       if (response.data.success) {
         const orderId = response.data.orderId; // Ensure your API returns this
