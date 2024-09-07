@@ -3,7 +3,7 @@ import "./PlaceOrder.css";
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { assets } from '../../assets/assets';
 const PlaceOrder = () => {
   const { getTotalCartAmount, token, food_list, cartItems, url,setAddress,address,orderItems,setOrderItems} = useContext(StoreContext);
   const [data, setData] = useState({
@@ -36,7 +36,6 @@ const PlaceOrder = () => {
         Items.push(itemInfo);
       }
     });
-    console.log(data)
     setAddress(data)
     setOrderItems(Items)
     navigate('/order-successful')
