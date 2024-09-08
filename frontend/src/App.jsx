@@ -27,7 +27,7 @@ const App = () => {
           <Route path="/order-cancellation" element={<OrderCancellation />} />
           <Route path="/order-successful" element={<OrderSuccessful />} />
           <Route path="/order-placed" element={<OrderPlaced />} />
-          <Route path="/my-orders" element={<MyOrders/>}/>
+          <Route path="/myorders" element={<MyOrders/>}/>
         </Routes>
       </div>
       <Footer />

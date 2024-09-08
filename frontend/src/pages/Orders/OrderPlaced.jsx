@@ -43,13 +43,17 @@ const OrderPlaced = () => {
   return (
     <div className="order-placed">
       {
-        orderSuccess ? (<>
-        {
-          orderItems.map((item)=>{
-            return <OrderCard src={item.image} name={item.name} quantity={item.quantity} />
-          })
-        }
-        </>
+        orderSuccess ? 
+        (
+        // <>3
+        // {
+        //   orderItems.map((item)=>{
+        //     return <OrderCard src={item.image} name={item.name} quantity={item.quantity} />
+        //   })
+        // }
+        // </>
+        <h1 color='green'>Order placed Successfully</h1>
+
         ):
         <p>Error in placing order</p>
       }
