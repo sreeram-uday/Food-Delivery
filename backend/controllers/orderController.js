@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 
@@ -54,13 +55,28 @@ const placeOrder = async (req, res) => {
 
 // Fetching user orders
 const userOrders = async (req, res) => {
+  const userId = req.body.userId;
+
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "UserID is required" });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ success: false, message: "Invalid UserID format" });
+  }
+
   try {
-    const orders = await orderModel.find({ userId: req.body.userId });
+    // Correctly query orders by userId
+    const orders = await orderModel.find({ userId: new mongoose.Types.ObjectId(userId) });
+
+    console.log('Orders:', orders); // Debugging line
+
     res.json({ success: true, data: orders });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "Error" });
+    res.json({ success: false, message: "Error fetching orders" });
   }
 };
+
 
 export { placeOrder, userOrders };

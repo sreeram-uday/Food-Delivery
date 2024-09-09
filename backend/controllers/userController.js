@@ -20,7 +20,7 @@ import validator from "validator"
             
         }
 
-        const token =createToken(user._id);
+        const token =createToken(user.userId);
         res.json({success:true,token})
         
     } catch (error) {

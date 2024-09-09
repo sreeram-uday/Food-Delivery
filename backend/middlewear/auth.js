@@ -18,7 +18,7 @@ const authmiddleware = async (req, res, next) => {
     // Decode the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.body.userId = decoded.id; // Add userId to the request body for use in the next middleware
-
+    console.log("UserID in middleware:", req.body.userId); // Debugging line
     // Proceed to the next middleware if token is valid
     next();
   } catch (error) {
