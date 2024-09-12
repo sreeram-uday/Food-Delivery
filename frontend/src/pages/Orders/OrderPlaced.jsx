@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { OrderCard } from './OrderCard';
 
 const OrderPlaced = () => {
-  const {address,orderItems,url,token,getTotalCartAmount} = useContext(StoreContext)
+  const {address,orderItems,setOrderItems,url,token,getTotalCartAmount,setCartItems} = useContext(StoreContext)
   const [orderSuccess, setOrderSuccess] = useState(false); // State for order success message
   const nav = useNavigate()
   console.log('address',address)
@@ -34,6 +34,8 @@ const OrderPlaced = () => {
         const orderId = response.data.orderId; // Ensure your API returns this
         console.log('success')
         setOrderSuccess(true)
+        setOrderItems([])
+        setCartItems({})
       }
     } catch (error) {
       console.log('not success');
@@ -45,13 +47,6 @@ const OrderPlaced = () => {
       {
         orderSuccess ? 
         (
-        // <>3
-        // {
-        //   orderItems.map((item)=>{
-        //     return <OrderCard src={item.image} name={item.name} quantity={item.quantity} />
-        //   })
-        // }
-        // </>
         <h1 color='green'>Order placed Successfully</h1>
 
         ):

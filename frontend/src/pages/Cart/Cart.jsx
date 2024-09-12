@@ -1,12 +1,38 @@
-import React, { useContext } from "react";
+import React, { useContext } from "react"; 
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getTotalCartAmount ,url} = useContext(StoreContext);
-
+  const { cartItems, food_list, removeFromCart, getTotalCartAmount, url, setCartItems,token } = useContext(StoreContext);
   const navigate = useNavigate();
+
+  const handlePlaceOrder = async () => {
+    
+    try {
+      console.log('cart-tems',cartItems)
+      const userId = 'yourUserId'; // Replace with actual user ID
+      const amount = getTotalCartAmount(); // Calculate the total amount
+      const address = 'userAddress'; // Replace with actual address or obtain from a form
+  
+      // Send a request to the backend to place the order
+      await axios.post('http://localhost:4000/api/order/place', {
+        userId,
+        items: cartItems,
+        amount,
+        address
+      },{headers:{token}});
+  
+      // Clear the cart and update state // or your method to clear the cart
+  
+      // Navigate to the order confirmation page
+      navigate('/order');
+    } catch (error) {
+      console.error('Error placing order:', error);
+    }
+  };
+  
 
   return (
     <div className="cart">
@@ -29,7 +55,7 @@ const Cart = () => {
                   <img src={url+"/images/"+item.image} alt="" />
                   <p>{item.name}</p>
                   <p>Rs{item.price}</p>
-                  <p>{cartItems[item.userId]}</p>
+                  <p>{cartItems[item._id]}</p>
                   <p>Rs{item.price * cartItems[item._id]}</p>
                   <p onClick={() => removeFromCart(item._id)} className="cross">x</p>
                 </div>
@@ -51,15 +77,15 @@ const Cart = () => {
             <hr/>
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>{getTotalCartAmount()===0?0:2}</p>
+              <p>{getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
             <hr/>
             <div className="cart-total-details">
               <b>Total</b>
-              <b>{getTotalCartAmount()===0?0:getTotalCartAmount() + 2}</b>
+              <b>{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
             </div>
           </div>
-          <button onClick={() => navigate('/order')}>Proceed To Check Out</button>
+          <button onClick={handlePlaceOrder}>Proceed To Check Out</button>
         </div>
         <div className="cart-promocode">
           <div>

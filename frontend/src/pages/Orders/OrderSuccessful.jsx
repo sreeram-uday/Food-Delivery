@@ -52,6 +52,7 @@ const OrderSuccessful = () => {
       <h1>Order Placed Successfully</h1>
       <p>Your order has been placed successfully. It will be processed shortly.</p>
       <p>Order can be cancelled within: {Math.floor(timer / 60)}:{('0' + (timer % 60)).slice(-2)}</p>
+
       
       <div className="button2">
         {timer > 0 ? (

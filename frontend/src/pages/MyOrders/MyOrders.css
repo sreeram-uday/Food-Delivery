@@ -1,0 +1,58 @@
+.my-orders {
+    margin: 50px 0px;
+}
+
+.my-orders .container {
+    display: flex;
+    flex-direction: column; /* This ensures items stack vertically */
+    gap: 20px;
+    margin-top: 30px;
+    align-items: flex-start; /* Aligns the items to the left */
+}
+
+.my-orders-order {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 2fr 1fr;
+  
+    align-items: center;
+    gap: 30px;
+    font-size: 14px;
+    padding: 10px 20px;
+    color:#454545;
+    border: 1px solid tomato;
+    
+
+
+}
+
+.my-orders-order img {
+    align-self: flex-start; /* Align image to the left */
+    width: 50px;
+}
+
+.my-orders-order p span {
+    margin: 5px 0;
+    text-align: left;
+    color:red /* Aligns text to the left */
+
+}
+
+.my-orders-order  button {
+    align-self: flex-start; /* Ensures button is aligned to the left */
+    padding: 10px 40px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+@media(max-width:900px){
+    .my-orders-order{
+        grid-template-columns: 1fr 2fr 1fr;
+        row-gap: 5px;
+        font-size: 12px;
+    }
+    .my-orders-order button{
+        font-size: 10px;
+    }
+}

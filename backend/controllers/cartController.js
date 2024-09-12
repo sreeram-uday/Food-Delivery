@@ -11,6 +11,7 @@ const addtoCart= async(req,res) =>{
         else{
             cartData[req.body.itemId]+=1;
         }
+        console.log('cart',cartData)
         await userModel.findByIdAndUpdate(req.body.userId,{cartData});
         res.json({success:true, message:"Added to Cart"})
     } catch (error) {
