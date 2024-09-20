@@ -28,18 +28,6 @@ app.get('/', (req, res) => {
 
 const port = process.env.PORT || 4000; 
 
-const __dirname = path.resolve();
-app.use('/frontend', express.static(path.join(__dirname, '../frontend/dist')));
-app.use('/admin', express.static(path.join(__dirname, '../admin/dist')));
-
-app.get('/frontend/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-});
-
-app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../admin/dist', 'index.html'));
-});
-
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
