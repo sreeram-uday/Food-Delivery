@@ -1,57 +1,45 @@
-// server.js
 import path from "path";
 import express from 'express'; 
-import cors from 'cors'; // Import CORS
+import cors from 'cors'; 
 import { connectDB } from './config/db.js';
 import foodRouter from './routes/foodRoute.js';
 import userRouter from './routes/userRoute.js';
-import 'dotenv/config.js';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
+import 'dotenv/config.js'; // Make sure your .env file is properly configured
 
-
-const app = express(); // Create an Express application
+const app = express(); 
 
 // Middleware
 app.use(express.json()); 
-app.use(cors()); // Use CORS middleware
+app.use(cors()); // Enable CORS for cross-origin resource sharing
 
 // Connect to the database
 connectDB();
+app.use("/api/food", foodRouter);
+app.use("/images", express.static('uploads'));
+app.use("/api/user", userRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
 
-//api endpoints
-app.use("/api/food",foodRouter)
-app.use("/images",express.static('uploads'))
-app.use("/api/user",userRouter)
-app.use("/api/cart",cartRouter)
-app.use("/api/order",orderRouter)
-
-
-// Define routes
 app.get('/', (req, res) => {
   res.send('Server Started');
 });
 
-// Set the port
-const port = 4000; 
+const port = process.env.PORT || 4000; 
+
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
-app.use(express.static(path.join(__dirname, "/admin/dist")));
+app.use('/frontend', express.static(path.join(__dirname, '../frontend/dist')));
+app.use('/admin', express.static(path.join(__dirname, '../admin/dist')));
 
 app.get('/frontend/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
 
-// Handle admin routes
 app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'admin', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../admin/dist', 'index.html'));
 });
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
-//mongodb+srv://Abhi_45:Abhi459_145@cluster0.vdq8m.mongodb.net/?
