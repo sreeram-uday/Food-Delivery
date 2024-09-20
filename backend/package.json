@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "server": "nodemon server.js",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend && npm install --prefix admin && npm run build --prefix admin",
+  "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend && npm install --prefix admin && npm run build --prefix admin",
     "start": "node server.js"
   },
   "author": "",
