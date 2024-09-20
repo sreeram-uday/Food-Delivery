@@ -4,10 +4,16 @@ import userModel from "../models/userModel.js";
 
 // Place Order Function
 const placeOrder = async (req, res) => {
-  const frontend_url="http://localhost:5173"
+  const frontend_url = "http://localhost:5173";
   let { userId, items, amount, address } = req.body;
-  console.log(items)
+  console.log('in place order')
+  
   try {
+    // Validate input data
+    if (!userId || !items || !amount || !address) {
+      return res.status(400).json({ success: false, message: "All fields are required" });
+    }
+
     // Create and save a new order
     const newOrder = new orderModel({
       userId,
@@ -17,9 +23,9 @@ const placeOrder = async (req, res) => {
     });
 
     await newOrder.save();
-    if(newOrder){
+
     // Clear user's cart
-    await userModel.findByIdAndUpdate(userId, { cartData: {} });
+    await userModel.findByIdAndUpdate(userId, { cartData: [] }); // Ensure cartData is an array
 
     // Prepare line items for payment
     const line_items = newOrder.items.map((item) => ({
@@ -28,7 +34,7 @@ const placeOrder = async (req, res) => {
         product_data: {
           name: item.name,
         },
-        unit_amount: item.price * 100 * 80, // Ensure this multiplier is correct
+        unit_amount: item.price * 100 * 80, // Verify this multiplier
       },
       quantity: item.quantity,
     }));
@@ -39,14 +45,13 @@ const placeOrder = async (req, res) => {
         product_data: {
           name: "Delivery Charges",
         },
-        unit_amount: 2 * 100 * 80, // Ensure this value is correct
+        unit_amount: 2 * 100 * 80, // Verify this value
       },
       quantity: 1,
     });
 
     console.log("Order placed successfully");
     res.status(200).json({ success: true });
-  }
   } catch (error) {
     console.error('Error placing order:', error);
     res.status(500).json({ success: false, message: error.message || "Error placing order" });
@@ -93,13 +98,11 @@ const listOrders=async (req,res)=>{
 //api for updating order status
 const updateStatus = async (req, res) => {
   try {
-    await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status})
+    await orderModel.findByIdAndUpdate(req.body.orderId,{status: req.body.status})
     res.json({success:true,message:"Status Updated"})
   } catch (error) {
     console.log(error);
-    res.json({success:false,message:"Error"})
-    
-    
+    res.json({success:false,message:"Error"}) 
   }
 };
 

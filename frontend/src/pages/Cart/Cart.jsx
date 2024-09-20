@@ -9,28 +9,7 @@ const Cart = () => {
   const navigate = useNavigate();
 
   const handlePlaceOrder = async () => {
-    
-    try {
-      console.log('cart-tems',cartItems)
-      const userId = 'yourUserId'; // Replace with actual user ID
-      const amount = getTotalCartAmount(); // Calculate the total amount
-      const address = 'userAddress'; // Replace with actual address or obtain from a form
-  
-      // Send a request to the backend to place the order
-      await axios.post('http://localhost:4000/api/order/place', {
-        userId,
-        items: cartItems,
-        amount,
-        address
-      },{headers:{token}});
-  
-      // Clear the cart and update state // or your method to clear the cart
-  
-      // Navigate to the order confirmation page
-      navigate('/order');
-    } catch (error) {
-      console.error('Error placing order:', error);
-    }
+    navigate('/order')
   };
   
 

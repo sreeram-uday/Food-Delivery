@@ -3,10 +3,11 @@ import "./Orders.css";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { assets } from "../../assets/assets";
+import { useContext } from "react";
 
 const Orders = ({ url }) => {
   const [orders, setOrders] = useState([]);
-
+  const [count,setCount] = useState(0)
   // Function to fetch all orders
   const fetchAllOrders = async () => {
     try {
@@ -22,15 +23,27 @@ const Orders = ({ url }) => {
       console.error(error);
     }
   };
-  const statusHandler=async(event,orderId)=>{
-    console.log(event,orderId)
 
-  }
+  const statusHandler = async (event, orderId) => {
+    const data = {
+      status: event.target.value,
+      orderId: orderId
+    }
+    try{
+      const response = await axios.post(url+"/api/order/status",data)
+      if(response.data.success){
+        console.log(response.data.message)
+        setCount(count+1)
+      }
+    }catch(err){
+      console.log('error occured')
+    }
+  };
 
-  // Fetch orders on component mount
-  useEffect(() => {
-    fetchAllOrders();
-  }, []);
+  // Fetch orders on component amount
+useEffect(() => {
+  fetchAllOrders();
+}, [count]);
 
   return (
     <div className="order add">
@@ -42,10 +55,12 @@ const Orders = ({ url }) => {
             <div>
               <p className="order-item-food">
                 {order.items.map((item, index) => {
+                  const itemName = item.name || "Unknown Item";
+                  const itemQuantity = item.quantity || 0;
                   if (index === order.items.length - 1) {
-                    return item.name + " X " + item.quantity;
+                    return itemName + " X " + itemQuantity;
                   } else {
-                    return item.name + " X " + item.quantity + ",";
+                    return itemName + " X " + itemQuantity + ", ";
                   }
                 })}
               </p>
@@ -53,7 +68,7 @@ const Orders = ({ url }) => {
                 {order.address.firstName + " " + order.address.lastName}
               </p>
               <div className="order-item-address">
-                <p>{order.address.street + ","}</p>
+                <p>{order.address.street + ", "}</p>
                 <p>
                   {order.address.city +
                     ", " +
@@ -66,14 +81,14 @@ const Orders = ({ url }) => {
               </div>
               <p className="order-item-phone">{order.address.phone}</p>
             </div>
-            <p>Items:{order.items.length}</p>
+            <p>Items: {order.items.length}</p>
             <p>${order.amount}</p>
             <select
               onChange={(event) => statusHandler(event, order._id)}
               value={order.status}
             >
               <option value="Food Processing">Food Processing</option>
-              <option value="Out For Delivery">Out For Delivery</option>
+              <option value="Out for delivery">Out For Delivery</option>
               <option value="Delivered">Delivered</option>
             </select>
           </div>

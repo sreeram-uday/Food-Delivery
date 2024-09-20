@@ -1,7 +1,9 @@
-import React from 'react';
+import React ,{useEffect,useState}from 'react';
 import './OrderCancellation.css';
 
+
 const OrderCancellation = () => {
+  
   return (
     <div className="order-cancellation">
       <h1>Order Cancelled</h1>

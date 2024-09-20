@@ -1,4 +1,5 @@
 // server.js
+import path from "path";
 import express from 'express'; 
 import cors from 'cors'; // Import CORS
 import { connectDB } from './config/db.js';
@@ -33,6 +34,14 @@ app.get('/', (req, res) => {
 
 // Set the port
 const port = 4000; 
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.use(express.static(path.join(__dirname, "/admin/dist")));
+
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+	res.sendFile(path.join(__dirname, "admin", "dist", "index.html"));
+});
 
 // Start the server
 app.listen(port, () => {

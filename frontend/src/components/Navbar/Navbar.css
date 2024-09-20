@@ -47,11 +47,12 @@
     cursor: pointer;
 }
 
-.navbar dot{
+.navbar .dot{
     cursor: pointer;
 }
 .navbar-search-icon{
     position: relative;
+    cursor: pointer;
 }
 
 .navbar-search-icon .dot{

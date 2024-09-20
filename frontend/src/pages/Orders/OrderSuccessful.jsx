@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './OrderSuccessful.css';
+import { StoreContext } from '../../context/StoreContext';
 
 const OrderSuccessful = () => {
   const { orderId } = useParams(); 
-  const [timer, setTimer] = useState(3); 
+  const [timer, setTimer] = useState(60); 
   const navigate = useNavigate();
+  const {setOrderItems,setAddress,setCartItems} = useContext(StoreContext)
 
   // Using useEffect to handle the countdown and navigation when the timer expires
   useEffect(() => {
@@ -26,25 +28,10 @@ const OrderSuccessful = () => {
 
   // Function to handle the order cancellation
   const handleCancelOrder = async () => {
-    try {
-      const response = await fetch('/api/order/cancel', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ orderId }), // Send the orderId to the server for cancellation
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        alert('Order cancelled successfully');
-        navigate('/order-cancellation'); // Redirect to the cancellation page if successful
-      } else {
-        alert('Error cancelling order');
-      }
-    } catch (error) {
-      alert('An error occurred while cancelling the order');
-    }
+    setCartItems({})
+    setOrderItems([])
+    setAddress({})
+    navigate('/order-cancellation')
   };
 
   return (

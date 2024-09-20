@@ -18,6 +18,17 @@ const Navbar = ({ setShowLogin }) => {
 
     }
 
+    const handleSearch = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        // Filter items based on the search query
+        const filtered = items.filter(item => 
+            item.name.toLowerCase().includes(query.toLowerCase())  // Adjust based on item structure
+        );
+        setFilteredItems(filtered);
+    };
+
     return (
         <div className='navbar'>
             <Link to='/'><img src={assets.logo} alt="" className="logo" /></Link>
