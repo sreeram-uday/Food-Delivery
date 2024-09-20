@@ -3,13 +3,11 @@
       {
         "src": "../frontend",
         "use": "@vercel/static-build",
-        "buildCommand": "npm run build --prefix ../frontend",
         "outputDirectory": "../frontend/dist"
       },
       {
         "src": "../admin",
         "use": "@vercel/static-build",
-        "buildCommand": "npm run build --prefix ../admin",
         "outputDirectory": "../admin/dist"
       }
     ]
